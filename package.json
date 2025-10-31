@@ -1,16 +1,17 @@
 {
   "name": "@clockjs/core",
-  "private": true,
   "version": "0.0.1",
   "type": "module",
+  "main": "dist/index.es.js",
+  "module": "dist/index.es.js",
+  "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
-    "build": "tsc && vite build"
+    "build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "typescript": "~5.9.3",
-    "vite": "npm:rolldown-vite@7.1.14"
-  },
-  "overrides": {
-    "vite": "npm:rolldown-vite@7.1.14"
+    "typescript": "~5.9.3"
   }
 }
