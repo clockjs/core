@@ -1,6 +1,7 @@
 {
   "name": "@clockjs/core",
   "version": "0.0.1",
+  "description": "A framework-agnostic core library for clock functionality, providing time management, animations, and calculations for building clock components in Vue, React, or other frameworks.",
   "type": "module",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
