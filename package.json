@@ -1,13 +1,15 @@
 {
   "name": "@clockjs/core",
   "version": "0.0.1",
-  "description": "A framework-agnostic core library for clock functionality, providing time management, animations, and calculations for building clock components in Vue, React, or other frameworks.",
+  "description": "A framework-agnostic core library for clock functionality, providing time management, animations, and calculations for building clock components.",
   "type": "module",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "browser": "dist/index.umd.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist",
     "prepublishOnly": "npm run build"
