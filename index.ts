@@ -12,21 +12,49 @@ import type {
 export * from "./src/types";
 export * from "./src/calculations";
 
-export class Clock {
+export class ClockFace {
+  private width: number;
+  private state: Omit<TimeState, "currentDate">;
+  constructor(state: Omit<TimeState, "currentDate">, width: number) {
+    this.width = width;
+    this.state = state;
+  }
+
+  getAngles(): ClockAngles {
+    return calculateAngles(
+      this.state.hours,
+      this.state.minutes,
+      this.state.seconds,
+      this.state.milliseconds
+    );
+  }
+
+  getShadows(): ClockShadows {
+    const angles = this.getAngles();
+    return {
+      hour: calculateShadow(angles.hour, this.width),
+      minute: calculateShadow(angles.minute, this.width),
+      second: calculateShadow(angles.second, this.width, 8),
+    };
+  }
+
+  setWidth(width: number): void {
+    this.width = width;
+  }
+}
+
+export class ClockWork {
   private options: ClockOptions;
   private state: TimeState;
   private tickAnimationState: TickAnimationState;
-  private width: number;
 
-  constructor(options: ClockOptions, width: number) {
+  constructor(options: ClockOptions) {
     this.options = options;
-    this.width = width;
     this.state = {
       hours: 0,
       minutes: 0,
       seconds: 0,
       milliseconds: 0,
-      currentDate: 0,
     };
     this.tickAnimationState = {
       lastSecond: -1,
@@ -38,7 +66,6 @@ export class Clock {
 
   updateSweep(): void {
     const time = getTime(this.options.timezone);
-    this.state.currentDate = time.getDate();
     this.state.hours = time.getHours();
     this.state.minutes = time.getMinutes();
     this.state.seconds = time.getSeconds();
@@ -48,7 +75,6 @@ export class Clock {
 
   updateTick(): void {
     const time = getTime(this.options.timezone);
-    this.state.currentDate = time.getDate();
 
     const targetSecond = time.getSeconds();
 
@@ -73,26 +99,9 @@ export class Clock {
     return { ...this.state };
   }
 
-  getAngles(): ClockAngles {
-    return calculateAngles(
-      this.state.hours,
-      this.state.minutes,
-      this.state.seconds,
-      this.state.milliseconds
-    );
-  }
-
-  getShadows(): ClockShadows {
-    const angles = this.getAngles();
-    return {
-      hour: calculateShadow(angles.hour, this.width),
-      minute: calculateShadow(angles.minute, this.width),
-      second: calculateShadow(angles.second, this.width, 8),
-    };
-  }
-
-  setWidth(width: number): void {
-    this.width = width;
+  getCurrentDate() {
+    const time = getTime(this.options.timezone);
+    return time.getDate();
   }
 
   setOptions(options: Partial<ClockOptions>): void {

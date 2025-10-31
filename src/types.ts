@@ -7,7 +7,6 @@ export interface TimeState {
   minutes: number;
   seconds: number;
   milliseconds: number;
-  currentDate: number;
 }
 
 export interface ClockAngles {
