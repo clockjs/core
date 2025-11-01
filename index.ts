@@ -50,12 +50,15 @@ export class ClockWork {
 
   constructor(options: ClockOptions) {
     this.options = options;
+
+    const time = getTime(this.options.timezone);
     this.state = {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
+      hours: time.getHours(),
+      minutes: time.getMinutes(),
+      seconds: time.getSeconds(),
+      milliseconds: time.getMilliseconds(),
     };
+
     this.tickAnimationState = {
       lastSecond: -1,
       startAngle: 0,
